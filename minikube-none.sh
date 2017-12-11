@@ -39,7 +39,7 @@ export MINIKUBE_WANTREPORTERRORPROMPT=false
 export MINIKUBE_HOME=$HOME
 export CHANGE_MINIKUBE_NONE_USER=true
 if [ -d $HOME/.kube ]; then
-    rm -r $HOME/.kube
+    sudo rm -r $HOME/.kube
 else
     mkdir $HOME/.kube
     touch $HOME/.kube/config
@@ -47,7 +47,7 @@ else
 fi
 
 if [ -d $HOME/.minikube ]; then
-    rm -r $HOME/.minikube
+    sudo rm -r $HOME/.minikube
 fi
 
 echo 
