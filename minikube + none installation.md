@@ -2,8 +2,16 @@
 - idea from https://github.com/kubernetes/minikube, fixed few issues
 - cleanup and build up minikube on Linux VM in few mins 
 
+## run installation script
 ```
-oldhorse@ubuntu:~$ sh ./minikube-none.sh
+$ curl -o minikube-none.sh https://raw.githubusercontent.com/robertluwang/docker-hands-on-guide/master/minikube-none.sh
+$ dos2unix minikube-none.sh
+$ bash ./minikube-none.sh
+```
+
+## running log
+```
+oldhorse@ubuntu:~$ bash ./minikube-none.sh
 Mon Dec 11 13:27:12 PST 2017
 
 check minikube binary ...
