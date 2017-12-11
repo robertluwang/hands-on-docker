@@ -2,6 +2,13 @@
 - idea from https://github.com/kubernetes/minikube, fixed few issues
 - cleanup and build up minikube on Linux VM in few mins 
 
+## docker installation 
+The docker is pre-condition for localkube since k8s running as containers.
+
+```
+$ curl -fsSL get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh
+```
 ## run installation script
 ```
 $ curl -o minikube-none.sh https://raw.githubusercontent.com/robertluwang/docker-hands-on-guide/master/minikube-none.sh
