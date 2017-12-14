@@ -7,15 +7,13 @@ $ kubectl get pods
 Unable to connect to the server: dial tcp 192.168.99.102:8443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
 ```
 
-There are many reasons and tons of workaround around the forums but there isn't one solid and quick to solve the issue. 
+There are many reasons and tons of workaround around the forums but there isn't one solid and quick remedy to solve the issue. 
 
 Most of chance, the ssh/ping working and routing looks good, TLS validation failed for ip:8443.
 
 When change the network environment, it may work without any change.
 
 The most worse case is firewall ON, block the traffic and port between host and vm guest.
-
-Beside the firewall, the minikube network is not stable, there is way to go to improve the coding quality.
 
 ## how to disable TLS verification for minikube
 The remedy is from [thegridman](https://github.com/thegridman) [minikube/issues/1099#](https://github.com/kubernetes/minikube/issues/1099#issuecomment-299277514):
