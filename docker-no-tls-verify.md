@@ -9,15 +9,13 @@ You can attempt to regenerate them using 'docker-machine regenerate-certs [name]
 Be advised that this will trigger a Docker daemon restart which might stop running containers.
 ```
 
-There are many reasons and tons of workaround around the forums but there isn't one solid and quick to solve the issue. It happened on all docker release.
+There are many reasons and tons of workaround around the forums but there isn't one solid and quick remedy to solve the issue. It happened on all docker release.
 
 Most of chance, the ssh/ping working and routing looks good, TLS validation failed for ip:2376.
 
 When change the network environment, it may work without any change.
 
 The most worse case is firewall ON, block the traffic and port between host and vm guest.
-
-Beside the firewall, the docker machine network is not stable, there is way to go to improve the coding quality.
 
 ## how to disable TLS verification for Docker
 The idea is to add port forward in virtualbox from host:2375 to guest 2376, 
