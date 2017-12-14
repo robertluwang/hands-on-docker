@@ -1,7 +1,8 @@
 #!/usr/bin/bash
 # minikubefw.sh
 # Robert Wang https://github.com/robertluwang
-# remedy for minikube in VPN/firewall on win
+# remedy for minikube without TLS verification when firewall ON
+# running platform: win msys64/cygwin64
 # Dec 14, 2017
 
 check8443=`VBoxManage showvminfo minikube|grep 127.0.0.1|grep 8443|cut -d, -f4|cut -d= -f2`
