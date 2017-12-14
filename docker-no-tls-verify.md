@@ -40,9 +40,13 @@ It provide same setting as below but without TLS verification,
 ```
 $ eval $(docker-machine env msys)
 ```
-Here is demo, 
+please source dockerfw.sh, otherwise cannot export env to current shell.
 ```
-$ dockerfw.sh msys
+$ . dockerfw.sh msys
+$ env|grep DOCKER
+DOCKER_HOST=tcp://127.0.0.1:2375
+DOCKER_MACHINE_NAME=msys
+DOCKER_CERT_PATH=/C/oldhorse/portableapps/msys64/home/username/.docker/machine/machines/msys
 $ docker run hello-world
 Hello from Docker!
 $ docker ps -a
