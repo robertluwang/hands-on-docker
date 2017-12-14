@@ -16,7 +16,7 @@ When change the network environment, it may work without any change.
 The most worse case is firewall ON, block the traffic and port between host and vm guest.
 
 ## how to disable TLS verification for minikube
-The remedy is from [thegridman](https://github.com/thegridman) [minikube/issues/1099#](https://github.com/kubernetes/minikube/issues/1099#issuecomment-299277514):
+The remedy idea is from [thegridman](https://github.com/thegridman) [minikube/issues/1099#](https://github.com/kubernetes/minikube/issues/1099#issuecomment-299277514):
 
 - setup port forward from host 8443 to minikube vm 8443 in virtualbox
 - create new context minikube-vpn without TLS verify
