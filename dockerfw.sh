@@ -6,6 +6,8 @@
 # usage: dockerfw.sh <docker machine name>
 # Dec 14, 2017
 
+export PORTSYS=`uname|cut -d'_' -f1`
+
 check2375=`VBoxManage showvminfo "$1"|grep 127.0.0.1|grep 2375|cut -d, -f4|cut -d= -f2`
 if [ $check2375 == '2375' ]; then 
     # if 127.0.0.1 2375 forward exist, skip
