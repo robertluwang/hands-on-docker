@@ -54,7 +54,6 @@ echo
 echo minikube start ...
 sudo -E minikube start --vm-driver=none
 
-sudo chown $USER:$USER /usr/local/bin/localkube
 sudo chmod +x /usr/local/bin/localkube
 
 echo 
