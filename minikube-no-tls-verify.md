@@ -32,6 +32,11 @@ Context "minikube-vpn" created.
 
 $ kubectl config use-context minikube-vpn
 Switched to context "minikube-vpn".
+
+$ kubectl config get-contexts
+CURRENT   NAME           CLUSTER        AUTHINFO   NAMESPACE
+*         minikube-vpn   minikube-vpn   minikube
+          minikube       minikube       minikube
 ```
 now kubectl can talk with minikube cluster as usual, 
 ```
