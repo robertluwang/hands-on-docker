@@ -7,7 +7,7 @@ $ kubectl get pods
 Unable to connect to the server: dial tcp 192.168.99.102:8443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
 ```
 
-There are many reasons and tons of workaround around the forums but there isn't one solid and quick remedy to solve the issue. 
+There are many reasons and tons of workaround around the forums but there isn't one solid and quick to solve the issue. 
 
 Most of chance, the ssh/ping working and routing looks good, TLS validation failed for ip:8443.
 
@@ -51,7 +51,21 @@ I1214 02:04:05.223882    7184 round_trippers.go:424]     User-Agent: kubectl.exe
 I1214 02:04:05.226882    7184 round_trippers.go:439] Response Status: 200 OK in 3 milliseconds
 No resources found.
 ```
-
+If want to use local docker client talk with minikube, do port forward 127.0.0.1:2374 to vm 2376, and disable TLS verify as below,   
+```
+$ VBoxManage controlvm minikube natpf1 k8s-docker,tcp,127.0.0.1,2374,,2376
+eval $(minikube docker-env) 
+unset DOCKER_TLS_VERIFY
+export DOCKER_HOST="tcp://127.0.0.1:2374"
+alias docker='docker --tls' 
+```
+let's verify local docker client:
+```
+$ docker ps
+CONTAINER ID        IMAGE                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES                                              
+ed0e8735c0a8        gcr.io/google_containers/k8s-dns-sidecar-amd64         "/sidecar --v=2 --..."   39 minutes ago      Up 40 minutes                           k8s_sidecar_kube-dns-86f6f55dd5-zfrfd_kube-system_9
+f5dbbb0-e084-11e7-bcdb-080027c9ba66_7                                          
+```                                                                            
 ## minikubefw.sh script
 
 I make it as small script to simplify the setup, you can find [here](https://github.com/robertluwang/docker-hands-on-guide/blob/master/minikubefw.sh).
@@ -64,5 +78,9 @@ Switched to context "minikube-vpn".
 
 $ kubectl get pods
 No resources found.
+
+$ docker ps
 ```
+
+
 
