@@ -54,10 +54,10 @@ No resources found.
 If want to use local docker client talk with minikube, do port forward 127.0.0.1:2374 to vm 2376, and disable TLS verify as below,   
 ```
 $ VBoxManage controlvm minikube natpf1 k8s-docker,tcp,127.0.0.1,2374,,2376
-eval $(minikube docker-env) 
-unset DOCKER_TLS_VERIFY
-export DOCKER_HOST="tcp://127.0.0.1:2374"
-alias docker='docker --tls' 
+$ eval $(minikube docker-env) 
+$ unset DOCKER_TLS_VERIFY
+$ export DOCKER_HOST="tcp://127.0.0.1:2374"
+$ alias docker='docker --tls' 
 ```
 let's verify local docker client:
 ```
