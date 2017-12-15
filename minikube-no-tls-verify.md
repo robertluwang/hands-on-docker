@@ -65,7 +65,11 @@ $ docker ps
 CONTAINER ID        IMAGE                                                  COMMAND                  CREATED             STATUS              PORTS               NAMES                                              
 ed0e8735c0a8        gcr.io/google_containers/k8s-dns-sidecar-amd64         "/sidecar --v=2 --..."   39 minutes ago      Up 40 minutes                           k8s_sidecar_kube-dns-86f6f55dd5-zfrfd_kube-system_9
 f5dbbb0-e084-11e7-bcdb-080027c9ba66_7                                          
-```                                                                            
+``` 
+also test dashboard
+- host web browser type in: http://127.0.0.1:30000
+- curl http://127.0.0.1:30000
+
 ## minikubefw.sh script
 
 I make it as small script to simplify the setup, you can find [here](https://github.com/robertluwang/docker-hands-on-guide/blob/master/minikubefw.sh).
@@ -80,6 +84,9 @@ $ kubectl get pods
 No resources found.
 
 $ docker ps
+
+$ curl http://127.0.0.1:30000
+
 ```
 
 
