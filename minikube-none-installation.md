@@ -97,3 +97,17 @@ gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64   1.14.5              45994
 gcr.io/google-containers/kube-addon-manager            v6.4-beta.2         0a951668696f        6 months ago        79.2MB
 gcr.io/google_containers/pause-amd64                   3.0                 99e59f495ffa        19 months ago       747kB
 ```
+## sudo issue on EC2 Linux AMI 
+May get this error when run sript, 
+```
+bash ./minikube-none.sh                  
+sudo: minikube: command not found
+```    
+usually we put minikube/kubectl/localkube at /usr/local/bin, but /usr/local/bin is not in sudo secure_path.
+
+so update secure_path in sudo config,
+```
+$ sudo visudo
+Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
+```
+
