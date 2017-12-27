@@ -36,7 +36,7 @@ $ ./k8s-node.sh
 or 
 $ bash -x ./k8s-node.sh 
 ```
-then manually run join command as root from k8s-master, 
+then manually run join command (from k8s-master) as root,
 ```
 $ sudo kubeadm join --token 8f2887.40b2166d13f9e298 10.100.0.15:6443 --discovery-token-ca-cert-hash sha256:4d7e234e8c9d3378c5ccf47f1a228eac5aad98e657af6538e2eecc261f022579 
 ```
