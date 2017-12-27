@@ -12,6 +12,8 @@ pirvate network 10.100.0.0/24
 - Virtulbox v5.1.30 x64 on win7
 - portable msys64 on win7  [portabledevops](https://github.com/robertluwang/portabledevops)
 
+it also works for Linux and OS X.
+
 ## bring up k8s cluster with vagrant
 ```
 $ cd ~/vagrant/k8s
