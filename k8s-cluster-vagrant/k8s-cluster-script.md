@@ -54,6 +54,11 @@ on k8s-master
 $ kubectl get nodes
 ```
 will see both nodes running.
-
+```
+vagrant@k8s-master:~$ kubectl get nodes
+NAME         STATUS    ROLES     AGE       VERSION
+k8s-master   Ready     master    9m        v1.8.0
+k8s-node1    Ready     <none>    1m        v1.8.0
+```
 
 
