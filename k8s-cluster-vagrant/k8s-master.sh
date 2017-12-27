@@ -11,16 +11,18 @@ sudo sed -i "2i10.100.0.16        k8s-node1" /etc/hosts
 
 # turn off swap
 sudo swapoff -a
-sudo sed -i '/ swap / s/^/#/' /etc/fstab
+sudo sed -i '/swap/d' /etc/fstab
 
 # create k8s cluster with calico network
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=10.100.0.15 
 
 # allow normal user to run kubectl 
-rm -r $HOME/.kube
-mkdir -p $HOME/.kube                                                         
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config                                         
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
+if [ -d $HOME/.kube ]; then
+  rm -r $HOME/.kube
+  mkdir -p $HOME/.kube 
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config                                         
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+fi
 
 # install calico network addon
 kubectl apply -f  https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
