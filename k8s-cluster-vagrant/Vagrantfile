@@ -1,0 +1,25 @@
+Vagrant.configure("2") do |config|
+    config.vm.box="gsengun/k8s-dev-box"
+    
+    config.vm.define "k8s-master" do |master|
+        master.vm.hostname = "k8s-master"
+        master.vm.network :private_network, ip: "10.100.0.15"
+        master.vm.network "forwarded_port", guest: 8443, host: 8443, protocol: "tcp"
+        master.vm.network "forwarded_port", guest: 30000, host: 30000, protocol: "tcp"
+        master.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+            vb.name="k8s-master"
+            vb.memory=1024
+        end
+    end
+    
+    config.vm.define "k8s-node1" do |node1|
+        node1.vm.hostname = "k8s-node1"
+        node1.vm.network :private_network, ip: "10.100.0.16"
+        node1.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+            vb.name="k8s-node1"
+            vb.memory=1024
+        end
+    end
+end 
