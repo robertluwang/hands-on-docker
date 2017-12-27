@@ -1,6 +1,12 @@
 # k8s cluster script
 It is a demo how to quickly setup a k8s cluster (2 nodes) for testing and education purpose.
 
+```
+pirvate network 10.100.0.0/24
+10.100.0.15 k8s-master
+10.100.0.16 k8s-node1
+```
+
 ## tool set
 - Vagrant v2.0.1 x64 on win7
 - Virtulbox v5.1.30 x64 on win7
