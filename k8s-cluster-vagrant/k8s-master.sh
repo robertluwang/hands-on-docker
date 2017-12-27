@@ -17,6 +17,7 @@ sudo sed -i '/ swap / s/^/#/' /etc/fstab
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=10.100.0.15 
 
 # allow normal user to run kubectl 
+rm -r $HOME/.kube
 mkdir -p $HOME/.kube                                                         
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config                                         
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
