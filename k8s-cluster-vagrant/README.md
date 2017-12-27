@@ -9,66 +9,11 @@ I prepare this [Vagrantfile](https://raw.githubusercontent.com/robertluwang/dock
 
 - k8s-master
 - k8s-node1 
-```
-cd ~/vagrant/k8s                    
-$ cat Vagrantfile                                        
-Vagrant.configure("2") do |config|
-    config.vm.box="gsengun/k8s-dev-box"
-    
-    config.vm.define "k8s-master" do |master|
-        master.vm.hostname = "k8s-master"
-        master.vm.network :private_network, ip: "10.100.0.15"
-        master.vm.network "forwarded_port", guest: 8443, host: 8443, protocol: "tcp"
-        master.vm.network "forwarded_port", guest: 30000, host: 30000, protocol: "tcp"
-        master.vm.provider :virtualbox do |vb|
-            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-            vb.name="k8s-master"
-            vb.memory=1024
-        end
-    end
-    
-    config.vm.define "k8s-node1" do |node1|
-        node1.vm.hostname = "k8s-node1"
-        node1.vm.network :private_network, ip: "10.100.0.16"
-        node1.vm.provider :virtualbox do |vb|
-            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-            vb.name="k8s-node1"
-            vb.memory=1024
-        end
-    end
-end                                              
-```
-vm customization setting,
-```
-vb.memory 1G 
---natdnshostresolver1 on, will add host-only interface for private network for k8s cluster
-master.vm.network :private_network, ip: "10.100.0.15"
-node1.vm.network :private_network, ip: "10.100.0.16"
-```
-## update /etc/hosts for cluster ip
-```
-vagrant@k8s-master:~$ cat /etc/hosts
-127.0.0.1       k8s-master      k8s-master
 
-vagrant@k8s-node1:~$ cat /etc/hosts
-127.0.0.1       k8s-node1       k8s-node1
 ```
-changed to 
+$ cd ~/vagrant/k8s
+$ curl -LO https://raw.githubusercontent.com/robertluwang/docker-hands-on-guide/master/k8s-cluster-vagrant/Vagrantfile
 ```
-vagrant@k8s-master:~$ cat /etc/hosts
-10.100.0.15       k8s-master      
-10.100.0.16     k8s-node1
-vagrant@k8s-node1:~$ cat /etc/hosts
-10.100.0.15       k8s-master      
-10.100.0.16     k8s-node1
-```
-can run these commands on each node,
-```
-sudo sed -i  '/k8s/d' /etc/hosts
-sudo sed -i "1i10.100.0.15        k8s-master" /etc/hosts
-sudo sed -i "2i10.100.0.16        k8s-node1" /etc/hosts
-```
-make sure you can ping each other.
 
 ## bring up 2 vm using vagrant 
 ```
@@ -156,6 +101,31 @@ Welcome to Ubuntu 16.04.1 LTS (GNU/Linux 4.4.0-31-generic x86_64)
  * Support:        https://ubuntu.com/advantage
 vagrant@k8s-master:~$
 ```
+## update /etc/hosts for cluster ip
+```
+vagrant@k8s-master:~$ cat /etc/hosts
+127.0.0.1       k8s-master      k8s-master
+
+vagrant@k8s-node1:~$ cat /etc/hosts
+127.0.0.1       k8s-node1       k8s-node1
+```
+changed to 
+```
+vagrant@k8s-master:~$ cat /etc/hosts
+10.100.0.15       k8s-master      
+10.100.0.16     k8s-node1
+vagrant@k8s-node1:~$ cat /etc/hosts
+10.100.0.15       k8s-master      
+10.100.0.16     k8s-node1
+```
+can run these commands on each node,
+```
+sudo sed -i  '/k8s/d' /etc/hosts
+sudo sed -i "1i10.100.0.15        k8s-master" /etc/hosts
+sudo sed -i "2i10.100.0.16        k8s-node1" /etc/hosts
+```
+make sure you can ping each other.
+
 ## k8s-master setup
 ### swap issue
 need to disable swap on linux, otherwise kubectl won't work.
