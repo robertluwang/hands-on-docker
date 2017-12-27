@@ -5,7 +5,7 @@
 - manually do mini config to setup k8s cluster
 
 ## create 2 vm in vagrant
-I prepare this Vagrantfile for 2 nodes k8s cluster:
+I prepare this [Vagrantfile](https://raw.githubusercontent.com/robertluwang/docker-hands-on-guide/master/k8s-cluster-vagrant/Vagrantfile) for 2 nodes k8s cluster:
 
 - k8s-master
 - k8s-node1 
