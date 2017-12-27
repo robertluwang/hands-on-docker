@@ -22,6 +22,7 @@ $ vagrant up
 $ vagrant status
 ```
 ## k8s master setup 
+It includes calico network addon installation.
 ```
 $ vagrant ssh k8s-master
 $ curl -LO https://raw.githubusercontent.com/robertluwang/docker-hands-on-guide/master/k8s-cluster-vagrant/k8s-master.sh 
