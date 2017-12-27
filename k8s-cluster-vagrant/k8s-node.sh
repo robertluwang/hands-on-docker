@@ -11,4 +11,4 @@ sudo sed -i "2i10.100.0.16        k8s-node1" /etc/hosts
 
 # turn off swap
 sudo swapoff -a
-sudo sed -i '/ swap / s/^/#/' /etc/fstab
+sudo sed -i '/swap/d' /etc/fstab
