@@ -18,8 +18,8 @@ $ vagrant status
 $ vagrant ssh k8s-master
 $ curl -LO https://raw.githubusercontent.com/robertluwang/docker-hands-on-guide/master/k8s-cluster-vagrant/k8s-master.sh 
 $ chmod +x k8s-master.sh
-$ ./k8s-master.sh 
-or 
+$ bash ./k8s-master.sh 
+or in debug
 $ bash -x ./k8s-master.sh 
 ```
 take note for token line from `kubeadm init`, will run on k8s-node1 later.
@@ -32,8 +32,8 @@ kubeadm join --token 8f2887.40b2166d13f9e298 10.100.0.15:6443 --discovery-token-
 $ vagrant ssh k8s-node1
 $ curl -LO https://raw.githubusercontent.com/robertluwang/docker-hands-on-guide/master/k8s-cluster-vagrant/k8s-node.sh
 $ chmod +x k8s-node.sh
-$ ./k8s-node.sh 
-or 
+$ bash ./k8s-node.sh 
+or in debug
 $ bash -x ./k8s-node.sh 
 ```
 then manually run join command (from k8s-master) as root,
