@@ -1,4 +1,4 @@
-#!/usr/bin/bash 
+#!/bin/bash 
 # k8s-master.sh   k8s master setup script
 # Ubuntu 16.04.1 LTS
 # Robert Wang   https://github.com/robertluwang 
