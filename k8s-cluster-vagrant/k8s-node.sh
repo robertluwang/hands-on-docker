@@ -1,4 +1,4 @@
-#!/usr/bin/bash 
+#!/bin/bash 
 # k8s-node.sh   k8s node setup script
 # Ubuntu 16.04.1 LTS
 # Robert Wang   https://github.com/robertluwang 
