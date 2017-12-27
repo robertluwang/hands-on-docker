@@ -1,5 +1,5 @@
 # k8s cluster script
-It is for demo how to quickly setup a k8s cluster (2 nodes) for testing and education purpose.
+It is a demo how to quickly setup a k8s cluster (2 nodes) for testing and education purpose.
 
 ## tool set
 - Vagrant v2.0.1 x64 on win7
