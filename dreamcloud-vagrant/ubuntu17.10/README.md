@@ -8,28 +8,20 @@ I build [dreancloud/ubuntu17.10](https://app.vagrantup.com/dreamcloud/boxes/ubun
 
 Here is demo how to launch ubuntu vm from this base, add 2nd host-only interface for private network.
 
-## Vagrantfile
+## prepare Vagrantfile
 ```
-Vagrant.configure("2") do |config|
-    config.vm.box="dreamcloud/ubuntu17.10"
-    
-    config.vm.define "ub1710" do |ub1710|
-        ub1710.vm.network :private_network, ip: "10.110.0.15"
-        ub1710.vm.hostname = "ub1710"
-        ub1710.vm.provider :virtualbox do |vb|
-            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-            vb.name="ub1710"
-            vb.memory=1024
-        end
-    end
-end
+$ mkdir ~/vagrant/ub17test
+$ cd ~/vagrant/ub17test
+$ curl -LO https://raw.githubusercontent.com/robertluwang/docker-hands-on-guide/master/dreamcloud-vagrant/ubuntu17.10/Vagrantfile
+$ vagrant up
+
 ```
 ## vagrant with ubuntu 17.10 NIC
 The reason to install ifupdown in dreancloud/ubuntu17.10 box, the current vagrant not supports ubuntu 17.10 NIC yet.
 
 This is common error will hit, 
 ```
-==> ub17k8s: Configuring and enabling network interfaces...
+==> ub17test: Configuring and enabling network interfaces...
 The following SSH command responded with a non-zero exit status.
 Vagrant assumes that this means the command failed!
 
