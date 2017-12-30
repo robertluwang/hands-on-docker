@@ -3,7 +3,7 @@ $masterScript = <<SCRIPT
 # update ub17k8s-master /etc/hosts
 sudo sed -i  '/ub17k8s/d' /etc/hosts
 sudo sed -i "1i10.110.0.15        ub17k8s-master" /etc/hosts
-sudo sed -i "2i10.110.0.16        ub17k8s-node1" /etc/hosts
+sudo sed -i "2i10.110.0.16        ub17k8s-node" /etc/hosts
 
 # turn off swap
 sudo swapoff -a
@@ -33,7 +33,7 @@ $nodeScript = <<SCRIPT
 # update ub17k8s-node /etc/hosts
 sudo sed -i  '/ub17k8s/d' /etc/hosts
 sudo sed -i "1i10.110.0.15        ub17k8s-master" /etc/hosts
-sudo sed -i "2i10.110.0.16        ub17k8s-node1" /etc/hosts
+sudo sed -i "2i10.110.0.16        ub17k8s-node" /etc/hosts
 
 # turn off swap
 sudo swapoff -a
@@ -61,15 +61,15 @@ Vagrant.configure("2") do |config|
         end
     end
     
-    config.vm.define "ub17k8s-node1" do |node1|
-        node1.vm.hostname = "ub17k8s-node1"
-        node1.vm.network :private_network, ip: "10.110.0.16"
+    config.vm.define "ub17k8s-node" do |node|
+        node.vm.hostname = "ub17k8s-node"
+        node.vm.network :private_network, ip: "10.110.0.16"
         
-        node1.vm.provision "shell", inline: $nodeScript, privileged: false
+        node.vm.provision "shell", inline: $nodeScript, privileged: false
                 
-        node1.vm.provider :virtualbox do |vb|
+        node.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-            vb.name="ub17k8s-node1"
+            vb.name="ub17k8s-node"
             vb.memory=1024
         end
     end
