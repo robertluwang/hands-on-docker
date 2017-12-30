@@ -15,10 +15,10 @@ sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-addres
 # allow normal user to run kubectl 
 if [ -d $HOME/.kube ]; then
   rm -r $HOME/.kube
-  mkdir -p $HOME/.kube 
-  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config                                         
-  sudo chown $(id -u):$(id -g) $HOME/.kube/config
-fi
+fi 
+mkdir -p $HOME/.kube 
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config                                         
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 # install calico network addon
 kubectl apply -f  https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
