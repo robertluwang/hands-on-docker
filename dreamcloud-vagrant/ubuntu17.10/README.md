@@ -1,4 +1,4 @@
-# launch ubuntu dev vm from dreancloud-ubuntu17.10
+# launch ubuntu dev vm from vagrant box
 
 I build [dreancloud/ubuntu17.10](https://app.vagrantup.com/dreamcloud/boxes/ubuntu17.10) vagrant box as practise, it is a dev ready vm:
 
