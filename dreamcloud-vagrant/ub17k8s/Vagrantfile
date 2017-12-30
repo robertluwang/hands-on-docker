@@ -53,7 +53,7 @@ curl -Lo $HOME/.ssh/vagrant https://raw.githubusercontent.com/hashicorp/vagrant/
 chmod 0600 $HOME/.ssh/vagrant
 
 # join cluster
-scp -q -i $HOME/.ssh/vagrant  ub17k8s-master:/tmp/jointoken  $HOME/jointoken
+scp -q -o "StrictHostKeyChecking no" -i $HOME/.ssh/vagrant  ub17k8s-master:/tmp/jointoken  $HOME/jointoken
 sudo sh $HOME/jointoken
 
 SCRIPT
