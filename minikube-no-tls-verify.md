@@ -46,7 +46,7 @@ No resources found.
 kubectl will talk to 127.0.0.1:8443 instead of 192.168.99.102:8443 now, 
 ```
 $ kubectl get pods --v 7
-I1214 02:04:04.661382    7184 loader.go:357] Config loaded from file C:\oldhorse\portableapps\msys64\home\erobwan/.kube/config
+I1214 02:04:04.661382    7184 loader.go:357] Config loaded from file C:\oldhorse\portableapps\msys64\home\oldhorse/.kube/config
 I1214 02:04:04.823382    7184 round_trippers.go:414] GET https://127.0.0.1:8443/api
 
 I1214 02:04:05.218882    7184 round_trippers.go:414] GET https://127.0.0.1:8443/api/v1/namespaces/default/pods
