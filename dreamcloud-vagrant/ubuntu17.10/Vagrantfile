@@ -1,0 +1,13 @@
+Vagrant.configure("2") do |config|
+    config.vm.box="dreamcloud/ubuntu17.10"
+    
+    config.vm.define "ub1710" do |ub1710|
+        ub1710.vm.network :private_network, ip: "10.110.0.15"
+        ub1710.vm.hostname = "ub1710"
+        ub1710.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+            vb.name="ub1710"
+            vb.memory=1024
+        end
+    end
+end
