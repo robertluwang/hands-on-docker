@@ -166,7 +166,7 @@ check out network addon from <https://kubernetes.io/docs/concepts/cluster-admini
 
 we use the calico network addon, so need to add calico pod network to `kubeadm init`.
 
-### mubeadm init to create cluster 
+### kubeadm init to create cluster 
 ```
 vagrant@k8s-master:~$ sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=10.100.0.15                                                                
 [kubeadm] WARNING: kubeadm is in beta, please do not use it for production clusters.                                                                                        
