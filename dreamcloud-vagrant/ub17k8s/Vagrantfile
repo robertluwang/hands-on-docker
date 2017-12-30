@@ -1,1 +1,77 @@
+$masterScript = <<SCRIPT
+
+# update ub17k8s-master /etc/hosts
+sudo sed -i  '/ub17k8s/d' /etc/hosts
+sudo sed -i "1i10.110.0.15        ub17k8s-master" /etc/hosts
+sudo sed -i "2i10.110.0.16        ub17k8s-node1" /etc/hosts
+
+# turn off swap
+sudo swapoff -a
+sudo sed -i '/swap/d' /etc/fstab
+
+# create k8s cluster with calico network
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=10.110.0.15 
+
+# allow normal user to run kubectl 
+if [ -d $HOME/.kube ]; then
+  rm -r $HOME/.kube
+  mkdir -p $HOME/.kube 
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config                                         
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+fi
+
+# install calico network addon
+kubectl apply -f  https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
+
+# all run on master
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
+SCRIPT
+
+$nodeScript = <<SCRIPT
+
+# update ub17k8s-node /etc/hosts
+sudo sed -i  '/ub17k8s/d' /etc/hosts
+sudo sed -i "1i10.110.0.15        ub17k8s-master" /etc/hosts
+sudo sed -i "2i10.110.0.16        ub17k8s-node1" /etc/hosts
+
+# turn off swap
+sudo swapoff -a
+sudo sed -i '/swap/d' /etc/fstab
+
+SCRIPT
+
+Vagrant.configure("2") do |config|
+    config.vm.box="dreamcloud/ub17k8s"
+    config.ssh.insert_key = false
+    config.vm.box_check_update = false
+    
+    config.vm.define "ub17k8s-master" do |master|
+        master.vm.hostname = "ub17k8s-master"
+        master.vm.network :private_network, ip: "10.110.0.15"
+        master.vm.network "forwarded_port", guest: 8443, host: 8443, protocol: "tcp"
+        master.vm.network "forwarded_port", guest: 30000, host: 30000, protocol: "tcp"
+        
+        master.vm.provision "shell", inline: $masterScript, privileged: false
+  
+        master.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+            vb.name="ub17k8s-master"
+            vb.memory=1024
+        end
+    end
+    
+    config.vm.define "ub17k8s-node1" do |node1|
+        node1.vm.hostname = "ub17k8s-node1"
+        node1.vm.network :private_network, ip: "10.110.0.16"
+        
+        node1.vm.provision "shell", inline: $nodeScript, privileged: false
+                
+        node1.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+            vb.name="ub17k8s-node1"
+            vb.memory=1024
+        end
+    end
+end
 
