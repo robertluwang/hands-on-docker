@@ -23,7 +23,7 @@ fi
 # install calico network addon
 kubectl apply -f  https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
 
-# all run on master
+# allow run on master
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
 SCRIPT
