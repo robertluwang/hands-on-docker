@@ -14,7 +14,7 @@ sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-addres
 
 cat /tmp/kubeadm.log  | grep "kubeadm join" > /tmp/jointoken
 
-rm /tmp/kubeadm.log
+#rm /tmp/kubeadm.log
 
 # allow normal user to run kubectl 
 if [ -d $HOME/.kube ]; then
