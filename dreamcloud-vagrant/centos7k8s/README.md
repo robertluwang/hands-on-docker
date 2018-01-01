@@ -29,8 +29,8 @@ you can change if you want except pod network in Vagrantfile.
 ## launch k8s cluster from vagrant box 
 ```
 $ date;vagrant up;date
-Sat, Dec 30, 2017 12:47:25 PM
-Sat, Dec 30, 2017 12:52:21 PM
+Mon, Jan 01, 2018  4:42:54 PM
+Mon, Jan 01, 2018  4:45:37 PM
 
 $ vagrant status
 Current machine states:
@@ -38,7 +38,7 @@ Current machine states:
 centos7k8s-master            running (virtualbox)
 centos7k8s-node              running (virtualbox)
 ```
-k8s cluster launched in exactly 5 mins !
+k8s cluster launched in exactly 3 mins !
 
 ## test k8s cluster 
 2 nodes cluster is ready now.
