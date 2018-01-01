@@ -10,7 +10,7 @@
 ## prepare Vagrantfile
 
 ```
-$ mkdir ~/vagrant/centos7k8stest
+$ cd ~/vagrant/centos7k8stest
 $ curl -LO https://raw.githubusercontent.com/robertluwang/docker-hands-on-guide/master/dreamcloud-vagrant/centos7k8s/Vagrantfile
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
