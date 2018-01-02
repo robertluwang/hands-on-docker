@@ -5,7 +5,7 @@
 ## tool set
 - vagant 2.0.1
 - virtualbox 5.1.30
-- cmder/msys64, I use [portabledevops](https://github.com/robertluwang/portabledevops) which steamless integrated with vagrant/virtualbox
+- cmder/msys64, I use [portabledevops](https://github.com/robertluwang/portabledevops) which seamless integrated with vagrant/virtualbox
 
 ## prepare Vagrantfile
 
