@@ -1,7 +1,7 @@
 
 # launch centos dev vm from dreancloud-centos7
 
-I build [dreancloud/centos7](https://app.vagrantup.com/dreamcloud/boxes/centos7) vagrant box as practise, it is a dev ready vm:
+I build [dreamcloud/centos7](https://app.vagrantup.com/dreamcloud/boxes/centos7) vagrant box as practise, it is a dev ready vm:
 
 - Guest Tool, shared folder 
 - gcc/git/python/pip
