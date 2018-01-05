@@ -1,6 +1,6 @@
 #!/bin/bash
 #  centos base box provision script for packer
-#  Robert Wang
+#  Robert Wang @github.com/robertluwang
 #  Jan 4th, 2018
 
 # fix  primary  NAT  interface issue
