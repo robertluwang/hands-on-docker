@@ -1,5 +1,5 @@
 #!/bin/bash
-#  centos  base  box  provision  script for packer  
+#  centos base box provision script 
 #  Robert Wang
 #  Jan 4th, 2018
 
