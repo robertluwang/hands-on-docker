@@ -1,9 +1,9 @@
-#!/bin/sh
-# centos base box provision script for packer
-# Robert Wang @github.com/robertluwang
-# Jan 4th, 2018
+#!/bin/bash
+#  centos  base  box  provision  script for packer  
+#  Robert Wang
+#  Jan 4th, 2018
 
-# fix primary NAT interface issue
+# fix  primary  NAT  interface issue
 ifcfgname=`ls /etc/sysconfig/network-scripts|grep ifcfg|grep -v ifcfg-lo|sort|head -1`
 sed -i '/ONBOOT=no/ s/ONBOOT=no/ONBOOT=yes/' /etc/sysconfig/network-scripts/$ifcfgname
 sed -i '/UUID/d' /etc/sysconfig/network-scripts/$ifcfgname
@@ -21,4 +21,4 @@ setenforce 0
 
 # update system
 yum -y -q update && sudo yum -y -q upgrade 
-yum install -y -q dos2unix
+yum install -y -q git dos2unix wget
