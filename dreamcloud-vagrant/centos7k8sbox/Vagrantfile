@@ -1,10 +1,10 @@
 # Vagrantfile
-# build up a centos k8s box from dreamcloud/centos7 box
+# build up a centos k8s box from base box
 # By Robert Wang @github.com/robertluwang
 # Jan 3rd, 2018
 
 Vagrant.configure("2") do |config|
-    config.vm.box="dreamcloud/centos7"
+    config.vm.box="centos/7"
     config.ssh.insert_key = false
     config.vm.box_check_update = false
     
