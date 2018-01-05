@@ -40,7 +40,7 @@ mv /tmp/repo /etc/yum.repos.d/kubernetes.repo
 # disable SELinux 
 setenforce 0
 
-yum install -y -q kubelet kubeadm kubectl
+yum install -y -q --nogpgcheck kubelet kubeadm kubectl
 
 systemctl enable kubelet && sudo systemctl start kubelet
 
