@@ -38,10 +38,10 @@
       "type": "shell",
       "scripts": [
         "../../scripts/centos-basebox.sh",
-        "../../scriptscentos-k8sbox.sh",
-        "../../scriptscentos-vbguest.sh",
-        "../../scriptscentos-publickey.sh",
-        "../../scriptscentos-cleanup.sh"
+        "../../scripts/centos-k8sbox.sh",
+        "../../scripts/centos-vbguest.sh",
+        "../../scripts/centos-publickey.sh",
+        "../../scripts/centos-cleanup.sh"
       ],
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
     }
@@ -53,3 +53,4 @@
     }
   ]
 }
+
