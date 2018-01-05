@@ -10,6 +10,6 @@ curl -Lo /home/vagrant/.ssh/authorized_keys  https://raw.githubusercontent.com/h
 chmod 0600 /home/vagrant/.ssh/authorized_keys
 chown -R vagrant /home/vagrant/.ssh
 
-sudo sed -i 's/^#AuthorizedKeysFile/AuthorizedKeysFile/'  /etc/ssh/sshd_config
+sed -i 's/^#AuthorizedKeysFile/AuthorizedKeysFile/'  /etc/ssh/sshd_config
 
-sudo /bin/systemctl restart sshd.service
+systemctl restart sshd.service
