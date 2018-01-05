@@ -1,4 +1,7 @@
 #!/bin/sh
+#  centos base box virtualbox guest tool script for packer
+#  Robert Wang @github.com/robertluwang
+#  Jan 4th, 2018
 
 yum install -y -q dkms gcc make kernel-devel bzip2 binutils patch libgomp glibc-headers glibc-devel kernel-headers  kernel-devel-`uname -r` 
 
