@@ -16,8 +16,8 @@ mv /etc/sudoers.d/vagrant  /etc/sudoers.d/vagrant.old
 echo '%vagrant ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/vagrant
 chmod 0440 /etc/sudoers.d/vagrant
 
-# disable SELinux 
-setenforce 0
+# SELinux to permissive mode
+sed -i -e 's/^SELINUX=.*/SELINUX=permissive/' /etc/selinux/config
 
 # update system
 yum -y -q update && sudo yum -y -q upgrade 
