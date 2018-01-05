@@ -9,6 +9,8 @@ sh get-docker.sh
 systemctl enable docker
 systemctl start docker
 
+rm get-docker.sh
+
 usermod -aG docker vagrant
 
 # compatability for cgroup driver
