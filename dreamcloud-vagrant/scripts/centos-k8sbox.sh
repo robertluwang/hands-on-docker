@@ -22,8 +22,6 @@ EOF
  
 mv /tmp/daemon.json /etc/docker/
 
-systemctl start docker
-
 # install k8s 
 cat  <<EOF  > /tmp/repo
 [kubernetes] 
