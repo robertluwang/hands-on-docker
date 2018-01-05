@@ -1,5 +1,5 @@
 # Vagrantfile
-# startup a centos k8s cluster from dreamcloud/centos7k8s
+# startup a centos k8s cluster from dreamcloud/centos7k8s box
 # By Robert Wang @github.com/robertluwang
 # Jan 3rd, 2018
 
