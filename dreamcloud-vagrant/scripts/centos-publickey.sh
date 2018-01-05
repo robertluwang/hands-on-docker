@@ -6,7 +6,7 @@
 # reset public key 
 mkdir -p /home/vagrant/.ssh
 chmod 0700 /home/vagrant/.ssh
-curl -Lo /home/vagrant/.ssh/authorized_keys  https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub
+curl -sSLo /home/vagrant/.ssh/authorized_keys  https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub
 chmod 0600 /home/vagrant/.ssh/authorized_keys
 chown -R vagrant /home/vagrant/.ssh
 
