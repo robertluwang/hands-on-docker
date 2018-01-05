@@ -1,0 +1,25 @@
+# Vagrantfile
+# build up a centos dev box from base box
+# By Robert Wang @github.com/robertluwang
+# Jan 3rd, 2018
+
+Vagrant.configure("2") do |config|
+    config.vm.box="centos/7"
+    config.ssh.insert_key = false
+    config.vm.box_check_update = false
+    
+    config.vm.define "centos7" do |ct7|
+        ct7.vm.hostname = "centos7"
+        
+        ct7.vm.provision "shell", inline: "date; echo centos7 provision starting", privileged: false
+        ct7.vm.provision "shell", path: "centos-basebox.sh"
+        ct7.vm.provision "shell", path: "centos-vbguest.sh"
+        ct7.vm.provision "shell", path: "centos-cleanup.sh"
+        ct7.vm.provision "shell", inline: "date; echo centos7 provision finished", privileged: false
+        
+        ct7.vm.provider :virtualbox do |vb|
+            vb.name="centos7"
+            vb.memory=1024
+        end
+    end
+end
