@@ -1,4 +1,7 @@
 #!/bin/sh
+# centos base box cleanup script for packer
+# Robert Wang @github.com/robertluwang
+# Jan 4th, 2018
 
 #  remove vbox guest source 
 rm -rf /usr/src/vboxguest* 
