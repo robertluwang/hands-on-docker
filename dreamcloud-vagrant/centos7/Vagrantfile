@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
         ct7.vm.network :private_network, ip: "10.120.0.15"
         ct7.vm.hostname = "centos7dev"
         ct7.vm.provider :virtualbox do |vb|
-            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
             vb.name="centos7dev"
             vb.memory=1024
         end
