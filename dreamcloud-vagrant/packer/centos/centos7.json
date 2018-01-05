@@ -37,10 +37,10 @@
     {
       "type": "shell",
       "scripts": [
-        "centos-basebox.sh",
-        "centos-vbguest.sh",
-        "centos-publickey.sh",
-        "centos-cleanup.sh"
+        "../../scripts/centos-basebox.sh",
+        "../../scripts/centos-vbguest.sh",
+        "../../scripts/centos-publickey.sh",
+        "../../scripts/centos-cleanup.sh"
       ],
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
     }
