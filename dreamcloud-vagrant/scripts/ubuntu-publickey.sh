@@ -3,6 +3,7 @@
 # Robert Wang @github.com/robertluwang
 # Jan 5th, 2018
 
+export DEBIAN_FRONTEND=noninteractive
 
 # reset public key 
 mkdir -p /home/vagrant/.ssh
