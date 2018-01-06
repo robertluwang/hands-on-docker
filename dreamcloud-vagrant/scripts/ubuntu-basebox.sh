@@ -3,6 +3,8 @@
 #  Robert Wang
 #  Jan 4th, 2018
 
+export DEBIAN_FRONTEND=noninteractive
+
 # add user vagrant to sudo group vagrant 
 groupadd vagrant
 usermod -a -G vagrant vagrant
