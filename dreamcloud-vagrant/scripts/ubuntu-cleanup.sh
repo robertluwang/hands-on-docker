@@ -3,6 +3,8 @@
 # Robert Wang @github.com/robertluwang
 # Jan 5th, 2018
 
+export DEBIAN_FRONTEND=noninteractive
+
 #  remove vbox guest source 
 rm -rf /usr/src/vboxguest* 
 
