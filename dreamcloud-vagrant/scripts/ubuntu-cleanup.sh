@@ -1,7 +1,7 @@
 #!/bin/sh
-# ubuntu base box cleanup script for packer
+# centos base box cleanup script for packer
 # Robert Wang @github.com/robertluwang
-# Jan 5th, 2018
+# Jan 6th, 2018
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -22,7 +22,7 @@ apt-get -y autoremove
 apt-get -y clean
 
 # defrag space 
-dd if=/dev/zero of=/EMPTY bs=1M
+dd if=/dev/zero of=/EMPTY bs=1M || echo "dd exit code $? is suppressed"
 rm -f /EMPTY
 
 # clean history
