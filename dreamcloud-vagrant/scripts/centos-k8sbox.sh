@@ -40,7 +40,7 @@ setenforce 0
 
 yum install -y -q --nogpgcheck kubelet kubeadm kubectl
 
-systemctl enable kubelet && sudo systemctl start kubelet
+systemctl enable kubelet && systemctl start kubelet
 
 # iptable
 cat <<EOF  > /tmp/k8s.conf
