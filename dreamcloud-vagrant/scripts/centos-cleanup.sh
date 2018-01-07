@@ -1,7 +1,7 @@
 #!/bin/sh
 # centos base box cleanup script for packer
 # Robert Wang @github.com/robertluwang
-# Jan 4th, 2018
+# Jan 6th, 2018
 
 #  remove vbox guest source 
 rm -rf /usr/src/vboxguest* 
@@ -9,12 +9,14 @@ rm -rf /usr/src/vboxguest*
 # remove under tmp directory
 rm -rf /tmp/*
 
-# clean cache 
-yum -y -q clean all
-rm -rf /var/cache/yum
+# remove caches
+find /var/cache -type f -exec rm -rf {} \;
+
+# delete any logs that have built up during the install
+find /var/log/ -name *.log -exec rm -f {} \;
 
 # defrag space 
-dd if=/dev/zero of=/EMPTY bs=1M
+dd if=/dev/zero of=/EMPTY bs=1M || echo "dd exit code $? is suppressed"
 rm -f /EMPTY
 
 # clean history
