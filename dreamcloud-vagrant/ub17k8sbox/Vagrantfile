@@ -1,0 +1,29 @@
+# Vagrantfile
+# build up a ubuntu k8s box from base box
+# By Robert Wang @github.com/robertluwang
+# Jan 5th, 2018
+
+Vagrant.configure("2") do |config|
+    config.vm.box="ubuntu/artful64"
+    config.ssh.insert_key = false
+    config.vm.box_check_update = false
+    
+    config.vm.define "ub17k8s" do |ubk8s|
+        ubk8s.vm.hostname = "ub17k8s"
+        
+        
+        ubk8s.vm.provision "shell", inline: "date; echo ub17k8s provision starting", privileged: false
+        ubk8s.vm.provision "shell", path: "../scripts/ubuntu-basebox.sh"
+        ubk8s.vm.provision "shell", path: "../scripts/ubuntu-k8sbox.sh"
+        ubk8s.vm.provision "shell", path: "../scripts/ubuntu-vbguest.sh"
+        ubk8s.vm.provision "shell", path: "../scripts/ubuntu-publickey.sh"
+        ubk8s.vm.provision "shell", path: "../scripts/ubuntu-cleanup.sh"
+        ubk8s.vm.provision "shell", inline: "date; echo ub17k8s provision finished", privileged: false
+        
+        ubk8s.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+            vb.name="ub17k8s"
+            vb.memory=1024
+        end
+    end
+end
