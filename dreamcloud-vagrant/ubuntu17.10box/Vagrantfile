@@ -1,0 +1,26 @@
+# Vagrantfile
+# build up a ubuntu dev box from base box
+# By Robert Wang @github.com/robertluwang
+# Jan 5th, 2018
+
+Vagrant.configure("2") do |config|
+    config.vm.box="dreamcloud/ubuntu17.10"
+    config.ssh.insert_key = false
+    config.vm.box_check_update = false
+    
+    config.vm.define "ubuntu17" do |ub|
+        ub.vm.hostname = "ubuntu17"
+        
+        ub.vm.provision "shell", inline: "date; echo ubuntu17 provision starting", privileged: false
+        ub.vm.provision "shell", path: "../scripts/ubuntu-basebox.sh"
+        ub.vm.provision "shell", path: "../scripts/ubuntu-vbguest.sh"
+        ub.vm.provision "shell", path: "../scripts/ubuntu-publickey.sh"
+        ub.vm.provision "shell", path: "../scripts/ubuntu-cleanup.sh"
+        ub.vm.provision "shell", inline: "date; echo ubuntu17 provision finished", privileged: false
+        
+        ub.vm.provider :virtualbox do |vb|
+            vb.name="ubuntu17"
+            vb.memory=1024
+        end
+    end
+end
