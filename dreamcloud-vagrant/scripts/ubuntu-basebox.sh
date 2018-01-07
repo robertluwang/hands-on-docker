@@ -1,7 +1,7 @@
 #!/bin/sh
 #  ubuntu base box provision script for packer  
 #  Robert Wang
-#  Jan 4th, 2018
+#  Jan 6th, 2018
 
 export DEBIAN_FRONTEND=noninteractive
 
