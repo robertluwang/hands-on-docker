@@ -2,7 +2,7 @@
 # ubuntu base box public key script for packer
 # Robert Wang @github.com/robertluwang
 # Jan 5th, 2018
-set -x
+
 export DEBIAN_FRONTEND=noninteractive
 
 # reset public key 
