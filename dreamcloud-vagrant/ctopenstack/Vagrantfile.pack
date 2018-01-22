@@ -1,0 +1,45 @@
+$ctos = <<SCRIPT
+
+# step0 presetup
+systemctl disable firewalld
+systemctl stop firewalld
+systemctl disable NetworkManager
+systemctl stop NetworkManager
+systemctl enable network
+systemctl start network
+
+# step 1 sw repo
+yum install -y centos-release-openstack-pike
+yum-config-manager --enable openstack-pike
+yum update -y
+
+# step 2 install packstack
+yum install -y openstack-packstack
+
+# step3 run packstack
+packstack --gen-answer-file=packstack_`date +"%Y-%m-%d"`.conf
+sed -i 's/10.0.2.15/10.120.0.21/g' packstack_`date +"%Y-%m-%d"`.conf
+packstack --answer-file packstack_`date +"%Y-%m-%d"`.conf
+
+SCRIPT
+
+
+Vagrant.configure("2") do |config|
+    config.vm.box="dreamcloud/centos7"
+    config.ssh.insert_key = false
+    config.vm.box_check_update = false
+
+    config.vm.define "ctopenstack" do |ct7|
+        ct7.vm.hostname = "ctopenstack"
+        ct7.vm.network :private_network, ip: "10.120.0.21"
+        ct7.vm.provision "shell", inline: $ctos, privileged: true
+
+        ct7.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+            vb.name="ctopenstack"
+            vb.memory=6144
+            vb.cpus=2
+        end
+    end
+end
+
