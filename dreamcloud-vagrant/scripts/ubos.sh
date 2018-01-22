@@ -1,4 +1,7 @@
-
+#!/bin/bash
+#  ubuntu openstack with devstack provision script for packer  
+#  Robert Wang
+#  Jan 22th, 2018
 
 sudo apt install bridge-utils
 
