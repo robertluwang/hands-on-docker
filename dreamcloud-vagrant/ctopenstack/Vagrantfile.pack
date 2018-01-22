@@ -1,3 +1,8 @@
+# Vagrantfile
+# build up a all-in-one centos openstack box from dreamcloud/centos7 box
+# By Robert Wang @github.com/robertluwang
+# Jan 22th, 2018
+
 $ctos = <<SCRIPT
 
 # step0 presetup
