@@ -1,4 +1,7 @@
-
+#!/bin/bash
+#  centos7 openstack with packstack provision script for packer  
+#  Robert Wang
+#  Jan 22th, 2018
 
 # step0 presetup
 systemctl disable firewalld
