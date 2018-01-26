@@ -61,7 +61,7 @@
   ],   
   "post-processors": [
     {
-      "output": "{{.Provider}}-ubuntu17-vagrant-packer.box",
+      "output": "{{.Provider}}-ub17k8s-vagrant-packer.box",
       "type": "vagrant"
     }
   ],
@@ -86,7 +86,7 @@
     }
   ],
   "variables": {
-    "box_basename": "ubuntu-17.10",
+    "box_basename": "ub17k8s",
     "build_timestamp": "{{isotime \"20060102150405\"}}",
     "cpus": "1",
     "disk_size": "65536",
@@ -99,10 +99,10 @@
     "memory": "1024",
     "mirror": "http://releases.ubuntu.com",
     "mirror_directory": "17.10",
-    "name": "ubuntu-17.10",
+    "name": "ub17k8s",
     "no_proxy": "{{env `no_proxy`}}",
     "preseed_path": "preseed.cfg",
-    "template": "ubuntu-17.10-amd64",
+    "template": "ub17k8s-amd64",
     "version": "TIMESTAMP"
   }
 }
