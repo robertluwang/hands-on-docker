@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #  ubuntu k8s box provision script for packer  
 #  Robert Wang
 #  Jan 4th, 2018
