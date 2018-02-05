@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # ubuntu base box public key script for packer
 # Robert Wang @github.com/robertluwang
 # Jan 5th, 2018
