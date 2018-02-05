@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #  ubuntu base box provision script for packer  
 #  Robert Wang
 #  Jan 6th, 2018
