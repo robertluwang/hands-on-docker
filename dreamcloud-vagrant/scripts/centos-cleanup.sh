@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # centos base box cleanup script for packer
 # Robert Wang @github.com/robertluwang
 # Jan 6th, 2018
