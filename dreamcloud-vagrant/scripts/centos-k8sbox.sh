@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # centos k8s box provision script for packer  
 # Robert Wang  @github.com/robertluwang
 # Jan 4th, 2018
