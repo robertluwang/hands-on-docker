@@ -9,7 +9,7 @@ sed -i '/ONBOOT=no/ s/ONBOOT=no/ONBOOT=yes/' /etc/sysconfig/network-scripts/$ifc
 sed -i '/UUID/d' /etc/sysconfig/network-scripts/$ifcfgname
 
 # add user vagrant to sudo group vagrant 
-if [ ! `cat /etc/group | grep vagrant`];then
+if [ ! `cat /etc/group | grep vagrant` ];then
     groupadd vagrant
 fi
 
