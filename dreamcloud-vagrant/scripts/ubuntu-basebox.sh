@@ -6,7 +6,7 @@
 export DEBIAN_FRONTEND=noninteractive
 
 # add user vagrant to sudo group vagrant 
-if [ ! `cat /etc/group | grep vagrant`];then
+if [ ! `cat /etc/group | grep vagrant` ];then
     groupadd vagrant
 fi
 
