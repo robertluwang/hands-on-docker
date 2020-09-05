@@ -14,6 +14,10 @@ systemctl start docker
 
 usermod -aG docker vagrant
 
+# turn off swap
+sudo swapoff -a
+sudo sed -i '/swap/d' /etc/fstab
+
 # install k8s 
 echo 'deb http://apt.kubernetes.io/ kubernetes-xenial main' >> /etc/apt/sources.list.d/kubernetes.list
 curl -sS https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
@@ -28,10 +32,6 @@ $masterScript = <<SCRIPT
 sudo sed -i  '/ub18k8s/d' /etc/hosts
 sudo sed -i "1i192.168.20.21        ub18k8s-master" /etc/hosts
 sudo sed -i "2i192.168.20.22        ub18k8s-node" /etc/hosts
-
-# turn off swap
-sudo swapoff -a
-sudo sed -i '/swap/d' /etc/fstab
 
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=192.168.20.21 \
  | tee /tmp/kubeadm.log  
@@ -58,10 +58,6 @@ $nodeScript = <<SCRIPT
 sudo sed -i  '/ub18k8s/d' /etc/hosts
 sudo sed -i "1i192.168.20.21        ub18k8s-master" /etc/hosts
 sudo sed -i "2i192.168.20.22        ub18k8s-node" /etc/hosts
-
-# turn off swap
-sudo swapoff -a
-sudo sed -i '/swap/d' /etc/fstab
 
 # add private key 
 curl -Lo $HOME/.ssh/vagrant https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant
@@ -126,6 +122,7 @@ Vagrant.configure("2") do |config|
         end
     end
 end
+
 
 
 
