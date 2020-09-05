@@ -39,16 +39,12 @@ kind: ClusterConfiguration
 kubernetesVersion: 1.19.0 
 controlPlaneEndpoint: "ub18k8s-master:6443" 
 networking:
-    podSubnet: 192.168.0.0/16
+  podSubnet: 192.168.0.0/16
 EOF
 
 # create k8s cluster with calico network
-sudo kubeadm init --config=kubeadm-config.yaml --upload-certs \
+sudo kubeadm init --config=kubeadm-config.yaml --upload-certs --apiserver-advertise-address=ub18k8s-master \
  | tee /tmp/kubeadm.log
-
-cat /tmp/kubeadm.log |grep -A3 "kubeadm join" |sed ':loop /^[^#].*[^\\]\\$/N; s/\\\n//; t loop'|head -1 > /tmp/jointoken
-
-#rm /tmp/kubeadm.log
 
 # allow normal user to run kubectl 
 if [ -d $HOME/.kube ]; then
@@ -82,8 +78,14 @@ curl -Lo $HOME/.ssh/vagrant https://raw.githubusercontent.com/hashicorp/vagrant/
 chmod 0600 $HOME/.ssh/vagrant
 
 # join cluster
-scp -q -o "StrictHostKeyChecking no" -i $HOME/.ssh/vagrant  ub18k8s-master:/tmp/jointoken  $HOME/jointoken  
-sudo sh $HOME/jointoken
+scp -q -o "StrictHostKeyChecking no" -i $HOME/.ssh/vagrant  ub18k8s-master:/tmp/kubeadm.log  /tmp/kubeadm.log
+token=`cat /tmp/kubeadm.log |grep "kubeadm join"|head -1 |awk -Ftoken '{print $2}'|awk '{print $1}'`
+certhash=`cat /tmp/kubeadm.log |grep discovery-token-ca-cert-hash|tail -1|awk '{print $2}'`
+certkey=`cat /tmp/kubeadm.log |grep control-plane |grep certificate-key|awk '{print $3}'`
+
+sudo kubeadm join ub18k8s-master:6443 --token $token \
+  --discovery-token-ca-cert-hash $certhash \
+  --control-plane --certificate-key $certkey
 
 SCRIPT
 
@@ -128,6 +130,11 @@ Vagrant.configure("2") do |config|
         end
     end
 end
+
+
+
+
+
 
 
 
