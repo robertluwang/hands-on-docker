@@ -33,18 +33,8 @@ sudo sed -i "2i192.168.20.22        ub18k8s-node" /etc/hosts
 sudo swapoff -a
 sudo sed -i '/swap/d' /etc/fstab
 
-cat <<EOF | tee kubeadm-config.yaml
-apiVersion: kubeadm.k8s.io/v1beta2
-kind: ClusterConfiguration
-kubernetesVersion: 1.19.0 
-controlPlaneEndpoint: "ub18k8s-master:6443" 
-networking:
-  podSubnet: 192.168.0.0/16
-EOF
-
-# create k8s cluster with calico network
-sudo kubeadm init --config=kubeadm-config.yaml --upload-certs --apiserver-advertise-address=ub18k8s-master \
- | tee /tmp/kubeadm.log
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=192.168.20.21 \
+ | tee /tmp/kubeadm.log  
 
 # allow normal user to run kubectl 
 if [ -d $HOME/.kube ]; then
@@ -81,11 +71,17 @@ chmod 0600 $HOME/.ssh/vagrant
 scp -q -o "StrictHostKeyChecking no" -i $HOME/.ssh/vagrant  ub18k8s-master:/tmp/kubeadm.log  /tmp/kubeadm.log
 token=`cat /tmp/kubeadm.log |grep "kubeadm join"|head -1 |awk -Ftoken '{print $2}'|awk '{print $1}'`
 certhash=`cat /tmp/kubeadm.log |grep discovery-token-ca-cert-hash|tail -1|awk '{print $2}'`
-certkey=`cat /tmp/kubeadm.log |grep control-plane |grep certificate-key|awk '{print $3}'`
 
 sudo kubeadm join ub18k8s-master:6443 --token $token \
-  --discovery-token-ca-cert-hash $certhash \
-  --control-plane --certificate-key $certkey
+  --discovery-token-ca-cert-hash $certhash 
+
+# allow normal user to run kubectl 
+if [ -d $HOME/.kube ]; then
+  rm -r $HOME/.kube
+fi 
+mkdir -p $HOME/.kube 
+scp -q -o "StrictHostKeyChecking no" -i $HOME/.ssh/vagrant ub18k8s-master:$HOME/.kube/config $HOME/.kube/config                                       
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 SCRIPT
 
@@ -130,6 +126,11 @@ Vagrant.configure("2") do |config|
         end
     end
 end
+
+
+
+
+
 
 
 
