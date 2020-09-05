@@ -1,7 +1,7 @@
 # Vagrantfile
-# startup a ubuntu 18.04 k8s cluster 
+# startup a ubuntu 18.04 k8s cluster from dreamcloud/ub18k8s box
 # By Robert Wang @github.com/robertluwang
-# Sept 4th, 2020
+# Sept 3rd, 2020
 
 $k8sScript = <<SCRIPT
 # update/upgrade system 
@@ -46,7 +46,7 @@ EOF
 sudo kubeadm init --config=kubeadm-config.yaml --upload-certs \
  | tee /tmp/kubeadm.log
 
-sed ':loop /^[^#].*[^\\]\\$/N; s/\\\n//; t loop' /tmp/kubeadm.log |grep 'kubeadm join'|head -1 > /tmp/jointoken
+cat /tmp/kubeadm.log |grep -A3 "kubeadm join" |sed ':loop /^[^#].*[^\\]\\$/N; s/\\\n//; t loop'|head -1 > /tmp/jointoken
 
 #rm /tmp/kubeadm.log
 
@@ -122,12 +122,17 @@ Vagrant.configure("2") do |config|
         node.vm.provision "shell", inline: "date; echo node provision finished", privileged: false
                 
         node.vm.provider :virtualbox do |vb|
-            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+            vb.customize ["modifyvm", :id, "--cpus", 2, "--natdnshostresolver1", "on"]
             vb.name="ub18k8s-node"
             vb.memory=2048
         end
     end
 end
+
+
+
+
+
 
 
 
