@@ -1,0 +1,134 @@
+# Vagrantfile
+# startup a ubuntu 18.04 k8s cluster 
+# By Robert Wang @github.com/robertluwang
+# Sept 4th, 2020
+
+$k8sScript = <<SCRIPT
+# update/upgrade system 
+apt-get update && apt-get upgrade -y 
+
+# install docker
+apt-get install -y docker.io
+systemctl enable docker
+systemctl start docker
+
+usermod -aG docker vagrant
+
+# install k8s 
+echo 'deb http://apt.kubernetes.io/ kubernetes-xenial main' >> /etc/apt/sources.list.d/kubernetes.list
+curl -sS https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+apt-get update && apt-get install -y -q kubelet=1.19.0-00 kubeadm=1.19.0-00 kubectl=1.19.0-00 
+apt-mark hold kubelet kubeadm kubectl
+
+SCRIPT
+
+$masterScript = <<SCRIPT
+
+# update ub18k8s-master /etc/hosts
+sudo sed -i  '/ub18k8s/d' /etc/hosts
+sudo sed -i "1i192.168.20.21        ub18k8s-master" /etc/hosts
+sudo sed -i "2i192.168.20.22        ub18k8s-node" /etc/hosts
+
+# turn off swap
+sudo swapoff -a
+sudo sed -i '/swap/d' /etc/fstab
+
+cat <<EOF | tee kubeadm-config.yaml
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: 1.19.0 
+controlPlaneEndpoint: "ub18k8s-master:6443" 
+networking:
+    podSubnet: 192.168.0.0/16
+EOF
+
+# create k8s cluster with calico network
+sudo kubeadm init --config=kubeadm-config.yaml --upload-certs \
+ | tee /tmp/kubeadm.log
+
+sed ':loop /^[^#].*[^\\]\\$/N; s/\\\n//; t loop' /tmp/kubeadm.log |grep 'kubeadm join'|head -1 > /tmp/jointoken
+
+#rm /tmp/kubeadm.log
+
+# allow normal user to run kubectl 
+if [ -d $HOME/.kube ]; then
+  rm -r $HOME/.kube
+fi 
+mkdir -p $HOME/.kube 
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config                                         
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# install calico network addon
+kubectl apply -f  https://docs.projectcalico.org/manifests/calico.yaml
+
+# allow run on master
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
+SCRIPT
+
+$nodeScript = <<SCRIPT
+
+# update ub18k8s-node /etc/hosts
+sudo sed -i  '/ub18k8s/d' /etc/hosts
+sudo sed -i "1i192.168.20.21        ub18k8s-master" /etc/hosts
+sudo sed -i "2i192.168.20.22        ub18k8s-node" /etc/hosts
+
+# turn off swap
+sudo swapoff -a
+sudo sed -i '/swap/d' /etc/fstab
+
+# add private key 
+curl -Lo $HOME/.ssh/vagrant https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant
+chmod 0600 $HOME/.ssh/vagrant
+
+# join cluster
+scp -q -o "StrictHostKeyChecking no" -i $HOME/.ssh/vagrant  ub18k8s-master:/tmp/jointoken  $HOME/jointoken  
+sudo sh $HOME/jointoken
+
+SCRIPT
+
+Vagrant.configure("2") do |config|
+    config.vm.box="dreamcloud/ubuntu18"
+    config.ssh.insert_key = false
+    config.vm.box_check_update = false
+    
+    config.vm.define "ub18k8s-master" do |master|
+        master.vm.hostname = "ub18k8s-master"
+        master.vm.network :private_network, ip: "192.168.20.21"
+        master.vm.network "forwarded_port", guest: 8443, host: 8443, protocol: "tcp"
+        master.vm.network "forwarded_port", guest: 30000, host: 30000, protocol: "tcp"
+        master.vm.provision "shell", inline: "date; echo master k8s installation starting", privileged: false
+        master.vm.provision "shell", inline: $k8sScript, privileged: true
+        master.vm.provision "shell", inline: "date; echo master k8s installation finished", privileged: false
+        master.vm.provision "shell", inline: "date; echo master provision starting", privileged: false
+        master.vm.provision "shell", inline: $masterScript, privileged: false
+        master.vm.provision "shell", inline: "date; echo master provision finished", privileged: false
+  
+        master.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--cpus", 2, "--natdnshostresolver1", "on"]
+            vb.name="ub18k8s-master"
+            vb.memory=4096
+        end
+    end
+    
+    config.vm.define "ub18k8s-node" do |node|
+        node.vm.hostname = "ub18k8s-node"
+        node.vm.network :private_network, ip: "192.168.20.22"
+        node.vm.provision "shell", inline: "date; echo node k8s installation starting", privileged: false
+        node.vm.provision "shell", inline: $k8sScript, privileged: true
+        node.vm.provision "shell", inline: "date; echo node k8s installation finished", privileged: false
+        node.vm.provision "shell", inline: "date; echo node provision starting", privileged: false
+        node.vm.provision "shell", inline: $nodeScript, privileged: false
+        node.vm.provision "shell", inline: "date; echo node provision finished", privileged: false
+                
+        node.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+            vb.name="ub18k8s-node"
+            vb.memory=2048
+        end
+    end
+end
+
+
+
+
