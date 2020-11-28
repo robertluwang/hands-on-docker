@@ -74,7 +74,7 @@ oldhorse@dreamcloud:~$ kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   1m
 
-ldhorse@dreamcloud:~$ docker ps
+oldhorse@dreamcloud:~$ docker ps
 CONTAINER ID        IMAGE                                                  COMMAND                  CREATED              STATUS              PORTS               NAMES
 7629769fcb9c        gcr.io/google_containers/k8s-dns-sidecar-amd64         "/sidecar --v=2 --lo…"   About a minute ago   Up About a minute                       k8s_sidecar_kube-dns-86f6f55dd5-ph7np_kube-system_adb62f87-deca-11e7-8301-080027005f20_0
 a226200124e5        gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64   "/dnsmasq-nanny -v=2…"   About a minute ago   Up About a minute                       k8s_dnsmasq_kube-dns-86f6f55dd5-ph7np_kube-system_adb62f87-deca-11e7-8301-080027005f20_0
