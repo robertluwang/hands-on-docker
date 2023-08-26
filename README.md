@@ -1,3 +1,3 @@
-# docker hands on guide
+# docker hands-on guide
 
-Hands on guide for docker, k8s cluster lightweight virtualization.
+Hands-on guide for docker, k8s cluster lightweight virtualization.
